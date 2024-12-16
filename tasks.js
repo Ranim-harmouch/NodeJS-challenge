@@ -146,7 +146,7 @@ function removeTask(index) {
   } else {
     const taskIndex = parseInt(index) - 1; // Convert to 0-based index
     if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
-      console.log('Error: Invalid task number!');
+      console.log('Error: Invalid task number! Please provide a valid task number.');
       return;
     }
 
