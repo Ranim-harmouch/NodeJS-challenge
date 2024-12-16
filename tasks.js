@@ -64,6 +64,9 @@ function onDataReceived(text) {
   else if (command === 'add') {
     addTask(parts.slice(1).join(' ')); // Adds task join all parts 
   }
+  else if (command === 'remove') {
+    removeTask(parts[1]); 
+  }
   else{
     unknownCommand(text);
   }
@@ -127,6 +130,34 @@ function addTask(taskDescription) {
 }
 
 /**
+ * Removes a task from the task list
+ * @param {string} index the index or empty string to remove the last task
+ * @returns {void}
+ */
+function removeTask(index) {
+  if (index === undefined || index === "") {
+    // Remove the last task
+    if (tasks.length > 0) {
+      const removedTask = tasks.pop(); //pop remove the lst elment 
+      console.log(`Removed last task: "${removedTask.task}"`);
+    } else {
+      console.log('No tasks to remove!');
+    }
+  } else {
+    const taskIndex = parseInt(index) - 1; // Convert to 0-based index
+    if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+      console.log('Error: Invalid task number!');
+      return;
+    }
+
+    // Remove the task at the given index
+    const removedTask = tasks.splice(taskIndex, 1);
+    console.log(`Removed task: "${removedTask[0].task}"`);
+  }
+}
+
+
+/**
  * Exits the application
  *
  * @returns {void}
@@ -156,6 +187,7 @@ function help(){
   console.log('  help          - Lists all the possible commands');
   console.log('  list          - Lists all tasks with numbers');
   console.log('  add [task]    - Adds a new task to the task list');
+  console.log('  remove [task_number] - Removes the task at the specified number (or last task if no number is provided)');
 }
 
 // The following line starts the application
