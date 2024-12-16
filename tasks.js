@@ -67,8 +67,48 @@ function onDataReceived(text) {
   else if (command === 'remove') {
     removeTask(parts[1]); 
   }
+  else if (command === 'edit') {
+    editTask(parts.slice(1)); 
+  }
   else{
     unknownCommand(text);
+  }
+}
+
+/**
+ * Handles the edit command
+ * @param {Array} args 
+ * @returns {void}
+ */
+function editTask(args) {
+  if (args.length === 0) {
+    console.log('Error: Please provide a task number or new text.');
+    return;
+  }
+
+  if (args.length === 1) {
+    // Edit the last task if no index is provided
+    const newText = args[0];
+    if (tasks.length === 0) {
+      console.log('No tasks to edit!');
+      return;
+    }
+    tasks[tasks.length - 1].task = newText; // Edit the last task
+    console.log(`Last task updated to: "${newText}"`);
+  } else if (args.length === 2) {
+    // Edit a specific task by index ("edit 1 new text")
+    const taskIndex = parseInt(args[0]) - 1; 
+    const newText = args[1];
+
+    if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+      console.log('Error: Invalid task number! Please provide a valid task number.');
+      return;
+    }
+
+    tasks[taskIndex].task = newText; // Edit the specified task
+    console.log(`Task ${taskIndex + 1} updated to: "${newText}"`);
+  } else {
+    console.log('Error: Invalid input for "edit" command.');
   }
 }
 
@@ -191,6 +231,7 @@ function help(){
   console.log('  list          - Lists all tasks with numbers');
   console.log('  add [task]    - Adds a new task to the task list');
   console.log('  remove [task_number] - Removes the task at the specified number (or last task if no number is provided)');
+  console.log('  edit [task_number|new_text] - Edits the task (last task if no number is provided)');
 }
 
 // The following line starts the application
