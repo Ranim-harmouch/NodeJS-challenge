@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const databaseFilePath = path.join(__dirname, 'database.json');//db file where tasks restored 
-
+//const databaseFilePath = path.join(__dirname, 'database.json');//db file where tasks restored 
+const databaseFilePath = process.argv[2] ? path.join(__dirname, process.argv[2]) : path.join(__dirname, 'database.json');
 /**
  * Starts the application
  * This is the function that is run when the app starts
