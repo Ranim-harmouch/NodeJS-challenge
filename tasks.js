@@ -176,6 +176,9 @@ function quit(){
  * quit
  * exit 
  * help
+ * list
+ * add
+ * remove
  * 
  * @returns {void}
  */
