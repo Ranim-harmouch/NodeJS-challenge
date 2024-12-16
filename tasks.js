@@ -18,6 +18,16 @@ function startApp(name){
 }
 
 
+//sample list of tasks
+
+let tasks = [
+  { task: 'Do projects' },
+  { task: 'Tasks' },
+  { task: 'Uni homework' },
+  { task: 'watch sunset' }
+];
+
+
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -36,6 +46,7 @@ function startApp(name){
 function onDataReceived(text) {
   text = text.trim(); //remove space 
   const parts = text.split(' ');
+  const command = parts[0];
   console.log(`Received command: ${command}, with arguments: ${parts.slice(1).join(' ')}`);
 
   if (command === 'quit' || command === 'exit') {
@@ -46,6 +57,9 @@ function onDataReceived(text) {
   }
   else if (command === 'help') {
     help();
+  }
+  else if (command === 'list') {
+    listTasks(); 
   }
   else{
     unknownCommand(text);
@@ -78,6 +92,22 @@ function hello(name){
   }
 }
 
+/**
+ * Lists all tasks with task numbers
+ * @returns {void}
+ */
+function listTasks() {
+  if (tasks.length === 0) {
+    console.log('No tasks to show!');
+    return;
+  }
+  
+  console.log('List of tasks:');
+  tasks.forEach((task, index) => {
+    console.log(`${index + 1}. ${task.task}`);
+  });
+}
+
 
 /**
  * Exits the application
@@ -107,6 +137,7 @@ function help(){
   console.log('  quit          - Exits the application');
   console.log('  exit          - Exits the application');
   console.log('  help          - Lists all the possible commands');
+  console.log('  list          - Lists all tasks with numbers');
 }
 
 // The following line starts the application
