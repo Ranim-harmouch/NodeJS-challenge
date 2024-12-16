@@ -1,3 +1,7 @@
+const fs = require('fs');
+const path = require('path');
+
+const databaseFilePath = path.join(__dirname, 'database.json');//db file where tasks restored 
 
 /**
  * Starts the application
@@ -13,10 +17,44 @@ function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
+
+  loadTasksFromFile();//load tasks from file 
+
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
+
+  process.on('exit', saveTasksToFile);//data saved in exit 
 }
 
+/**
+ * Loads the tasks from the 'database.json' file
+ * @returns {void}
+ */
+function loadTasksFromFile() {
+  try {
+    if (fs.existsSync(databaseFilePath)) {
+      const data = fs.readFileSync(databaseFilePath, 'utf8');
+      tasks = JSON.parse(data);
+      console.log('Tasks loaded from disk.');
+    }
+  } catch (error) {
+    console.log('Error loading tasks from disk:', error.message);
+  }
+}
+
+/**
+ * Saves the tasks to the 'database.json' file
+ * @returns {void}
+ */
+function saveTasksToFile() {
+  try {
+    const data = JSON.stringify(tasks, null, 2);
+    fs.writeFileSync(databaseFilePath, data);
+    console.log('Tasks saved to disk.');
+  } catch (error) {
+    console.log('Error saving tasks to disk:', error.message);
+  }
+}
 
 //sample list of tasks
 
