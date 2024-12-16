@@ -21,10 +21,10 @@ function startApp(name){
 //sample list of tasks
 
 let tasks = [
-  { task: 'Do projects' },
-  { task: 'Tasks' },
-  { task: 'Uni homework' },
-  { task: 'watch sunset' }
+  { task: 'Do projects', done: false },
+  { task: 'Tasks', done: false },
+  { task: 'Uni homework', done: false },
+  { task: 'watch sunset', done: true }
 ];
 
 
@@ -69,6 +69,9 @@ function onDataReceived(text) {
   }
   else if (command === 'edit') {
     editTask(parts.slice(1)); 
+  }
+  else if (command === 'toggle') {
+    toggleTask(parts[1]); // Toggles the 'done' state
   }
   else{
     unknownCommand(text);
@@ -150,6 +153,7 @@ function listTasks() {
   
   console.log('List of tasks:');
   tasks.forEach((task, index) => {
+    const doneSymbol = task.done ? '[✓]' : '[ ]';
     console.log(`${index + 1}. ${task.task}`);
   });
 }
@@ -196,6 +200,23 @@ function removeTask(index) {
   }
 }
 
+/**
+ * Toggles the done state of a task
+ * @param {string} index the index of the task to toggle
+ * @returns {void}
+ */
+function toggleTask(index) { //toggle switch
+  const taskIndex = parseInt(index) - 1; 
+  if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+    console.log('Error: Invalid task number! Please provide a valid task number.');
+    return;
+  }
+
+  tasks[taskIndex].done = !tasks[taskIndex].done; 
+  const doneSymbol = tasks[taskIndex].done ? '[✓]' : '[ ]';
+  console.log(`Task ${taskIndex + 1} toggled to: ${doneSymbol} ${tasks[taskIndex].task}`);
+}
+
 
 /**
  * Exits the application
@@ -232,6 +253,7 @@ function help(){
   console.log('  add [task]    - Adds a new task to the task list');
   console.log('  remove [task_number] - Removes the task at the specified number (or last task if no number is provided)');
   console.log('  edit [task_number|new_text] - Edits the task (last task if no number is provided)');
+  console.log('  toggle [task_number] - Toggles the done state of a task');
 }
 
 // The following line starts the application
