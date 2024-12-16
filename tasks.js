@@ -61,6 +61,9 @@ function onDataReceived(text) {
   else if (command === 'list') {
     listTasks(); 
   }
+  else if (command === 'add') {
+    addTask(parts.slice(1).join(' ')); // Adds task join all parts 
+  }
   else{
     unknownCommand(text);
   }
@@ -108,6 +111,20 @@ function listTasks() {
   });
 }
 
+/**
+ * Adds a task to the list
+ * @param {string} taskDescription //description of the tasks
+ * @returns {void}
+ */
+function addTask(taskDescription) {
+  if (!taskDescription) {
+    console.log('Error: Please provide a task description.');
+    return;
+  }
+  
+  tasks.push({ task: taskDescription });
+  console.log(`Task added: "${taskDescription}"`);
+}
 
 /**
  * Exits the application
@@ -138,6 +155,7 @@ function help(){
   console.log('  exit          - Exits the application');
   console.log('  help          - Lists all the possible commands');
   console.log('  list          - Lists all tasks with numbers');
+  console.log('  add [task]    - Adds a new task to the task list');
 }
 
 // The following line starts the application
