@@ -103,10 +103,10 @@ function quit(){
  */
 function help(){
   console.log('Available commands:');
-  console.log('  hello  - Says hello');
-  console.log('  quit   - Exits the application');
-  console.log('  exit   - Exits the application');
-  console.log('  help   - Lists all the possible commands');
+  console.log('  hello [name]  - Says hello');
+  console.log('  quit          - Exits the application');
+  console.log('  exit          - Exits the application');
+  console.log('  help          - Lists all the possible commands');
 }
 
 // The following line starts the application
