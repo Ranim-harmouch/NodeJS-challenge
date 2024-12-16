@@ -287,6 +287,8 @@ function quit(){
  * list
  * add
  * remove
+ * check
+ * uncheck
  * 
  * @returns {void}
  */
