@@ -83,7 +83,13 @@ function quit(){
 
 
 /**
- * help  that lists all the possible commands
+ * help 
+ * lists all the possible commands
+ * It provides a list of all available commands in the application:
+ * hello
+ * quit
+ * exit 
+ * help
  * 
  * @returns {void}
  */
