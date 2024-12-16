@@ -71,7 +71,13 @@ function onDataReceived(text) {
     editTask(parts.slice(1)); 
   }
   else if (command === 'toggle') {
-    toggleTask(parts[1]); // Toggles the 'done' state
+    toggleTask(parts[1]); 
+  }
+  else if (command === 'check') {
+    checkTask(parts[1]); 
+  }
+  else if (command === 'uncheck') {
+    uncheckTask(parts[1]); 
   }
   else{
     unknownCommand(text);
@@ -217,6 +223,47 @@ function toggleTask(index) { //toggle switch
   console.log(`Task ${taskIndex + 1} toggled to: ${doneSymbol} ${tasks[taskIndex].task}`);
 }
 
+/**
+ * Marks a task as "done"
+ * @param {string} index the task index
+ * @returns {void}
+ */
+function checkTask(index) {
+  if (!index) {
+    console.log('Error: Please provide a task number to check.');
+    return;
+  }
+
+  const taskIndex = parseInt(index) - 1; 
+  if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+    console.log('Error: Invalid task number! Please provide a valid task number.');
+    return;
+  }
+
+  tasks[taskIndex].done = true;
+  console.log(`Task ${taskIndex + 1} is now marked as done: [✓] ${tasks[taskIndex].task}`);
+}
+
+/**
+ * Marks a task as "not done"
+ * @param {string} index the task index
+ * @returns {void}
+ */
+function uncheckTask(index) {
+  if (!index) {
+    console.log('Error: Please provide a task number to uncheck.');
+    return;
+  }
+
+  const taskIndex = parseInt(index) - 1; 
+  if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+    console.log('Error: Invalid task number! Please provide a valid task number.');
+    return;
+  }
+
+  tasks[taskIndex].done = false;
+  console.log(`Task ${taskIndex + 1} is now marked as not done: [ ] ${tasks[taskIndex].task}`);
+}
 
 /**
  * Exits the application
@@ -254,6 +301,8 @@ function help(){
   console.log('  remove [task_number] - Removes the task at the specified number (or last task if no number is provided)');
   console.log('  edit [task_number|new_text] - Edits the task (last task if no number is provided)');
   console.log('  toggle [task_number] - Toggles the done state of a task');
+  console.log('  check [task_number] - Marks a task as done');
+  console.log('  uncheck [task_number] - Marks a task as not done');
 }
 
 // The following line starts the application
